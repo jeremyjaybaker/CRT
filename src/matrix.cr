@@ -1,5 +1,3 @@
-require "./matrix_errors"
-
 # Representation of a float64-based matrix of arbitrary dimensions.
 #
 # TODO: There's a lot of initializing a matrix with 0, then setting values.
@@ -8,7 +6,7 @@ module CRT
   struct Matrix
     getter m, n, _values
 
-    # Easiest way to make a matrix with hard-coded values.
+    # Easiest way to make a simple matrix with hard-coded values.
     def initialize(@m : Int32, @n : Int32, *elements)
       initialize(@m, @n, elements.to_a.map(&.to_f))
     end
@@ -40,7 +38,6 @@ module CRT
       end
     end
 
-    # Mainly used for cloning. You generally won't want to make your arrays manually.
     def initialize(@_values : Array(Array(Float64)))
       @m = @_values.size
       @n = @_values[0].size

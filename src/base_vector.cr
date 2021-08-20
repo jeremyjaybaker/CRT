@@ -1,5 +1,7 @@
-# Superclass used to define basic behaviors for Point and Vector.
-# TODO: This is not a great name.
+# BaseVector is used as a superclass to make Point and Vector definitions
+# more convenient. The two classes are almost identical except for their
+# value of #w (0 for vector, 1 for point) which makes the linear algebra
+# calculations more smooth.
 module CRT
   abstract struct BaseVector
     getter matrix : CRT::Matrix
@@ -32,6 +34,10 @@ module CRT
       @matrix[0][2]
     end
 
+    def to_a
+      @matrix.to_a
+    end
+
     def w
       raise "Must be defined in child"
     end
@@ -48,11 +54,11 @@ module CRT
       self.class.new(@matrix * d)
     end
 
-    def +(vec : Vector)
+    def +(vec : BaseVector)
       self.class.new(@matrix + vec.matrix)
     end
 
-    def -(vec : Vector)
+    def -(vec : BaseVector)
       self.class.new(@matrix - vec.matrix)
     end
 
@@ -61,52 +67,71 @@ module CRT
     end
 
     def translate(x : Float64, y : Float64, z : Float64)
-      newm = Matrix.identity(4,4)
-      newm[0][3] = x
-      newm[1][3] = y
-      newm[2][3] = z
-      self.class.new(newm * @matrix)
+      arr = [
+        [1.0, 0.0, 0.0, x],
+        [0.0, 1.0, 0.0, y],
+        [0.0, 0.0, 1.0, z],
+        [0.0, 0.0, 0.0, 1.0]
+      ]
+      self.class.new(CRT::Matrix.new(arr) * self)
     end
 
     def scale(x : Float64, y : Float64, z : Float64)
-      newm = CRT::Matrix.identity(4,4)
-      newm[0][0] = x
-      newm[1][1] = y
-      newm[2][2] = z
-      self.class.new(newm * @matrix)
+      arr = [
+        [x,   0.0, 0.0, 0.0],
+        [0.0, y,   0.0, 0.0],
+        [0.0, 0.0, z,   0.0],
+        [0.0, 0.0, 0.0, 1.0]
+      ]
+      self.class.new(CRT::Matrix.new(arr) * self)
     end
 
     def rotate_x(rad : Float64)
-      multiply_by_new do |newm|
-        sin_val = Math.sin(rad)
-        newm[1][1] = newm[2][2] = Math.cos(rad)
-        newm[1][2] = sin_val * -1
-        newm[2][1] = sin_val
-      end
+      sin,cos = trig_vals(rad)
+      arr = [
+        [1.0, 0.0, 0.0,    0.0],
+        [0.0, cos, sin*-1, 0.0],
+        [0.0, sin, cos,    0.0],
+        [0.0, 0.0, 0.0,    1.0]
+      ]
+      self.class.new(CRT::Matrix.new(arr) * self)
     end
 
     def rotate_y(rad : Float64)
-      multiply_by_new do |newm|
-        sin_val = Math.sin(rad)
-        newm[0][0] = newm[2][2] = Math.cos(rad)
-        newm[2][0] = sin_val * -1
-        newm[0][2] = sin_val
-      end
+      sin,cos = trig_vals(rad)
+      arr = [
+        [cos,    0.0, sin, 0.0],
+        [0.0,    1.0, 0.0, 0.0],
+        [sin*-1, 0.0, cos, 0.0],
+        [0.0,    0.0, 0.0, 1.0]
+      ]
+      self.class.new(CRT::Matrix.new(arr) * self)
     end
 
     def rotate_z(rad : Float64)
-      multiply_by_new do |newm|
-        sin_val = Math.sin(rad)
-        newm[0][0] = newm[1][1] = Math.cos(rad)
-        newm[0][1] = sin_val * -1
-        newm[1][0] = sin_val
-      end
+      sin,cos = trig_vals(rad)
+      arr = [
+        [cos, sin*-1, 0.0, 0.0],
+        [sin, cos,    0.0, 0.0],
+        [0.0, 0.0,    1.0, 0.0],
+        [0.0, 0.0,    0.0, 1.0]
+      ]
+      self.class.new(CRT::Matrix.new(arr) * self)
     end
 
-    private def multiply_by_new(&)
-      newm = CRT::Matrix.identity(4,4)
-      yield newm
-      self.class.new(newm * self)
+    def shear(a : Float64,       b : Float64 = 0.0, c : Float64 = 0.0,
+              d : Float64 = 0.0, e : Float64 = 0.0, f : Float64 = 0.0)
+      arr = [
+        [1.0, a,   b,   0.0],
+        [c,   1.0, d,   0.0],
+        [e,   f,   1.0, 0.0],
+        [0.0, 0.0, 0.0, 1.0]
+      ]
+      self.class.new(CRT::Matrix.new(arr) * self)
+    end
+
+    private def trig_vals(rad : Float64)
+      [Math.sin(rad), Math.cos(rad)]
     end
   end
 end

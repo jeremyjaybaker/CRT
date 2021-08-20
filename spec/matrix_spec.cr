@@ -78,15 +78,15 @@ describe CRT::Matrix do
   end
 
   describe "cloning" do
-    mc = m1.clone
+    mc = m4.clone
 
     it "can make a new copy of its matrix values" do
-      mc.should eq m1
-      mc._values.object_id.should_not eq m1._values.object_id
+      mc.should eq m4
+      mc._values.object_id.should_not eq m4._values.object_id
     end
 
     it "copies its dimensions" do
-      mc.m.should eq m1.m
+      mc.m.should eq m4.m
     end
   end
 

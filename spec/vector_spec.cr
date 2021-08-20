@@ -1,7 +1,5 @@
 require "./spec_helper"
 
-# These tests are not comprehensive as the majority of
-# functionality is already tested in space_spec.cr
 describe CRT::Vector do
   v1 = CRT::Vector.new(1,2,3)
   v2 = CRT::Vector.new(4,5,6)
@@ -46,5 +44,56 @@ describe CRT::Vector do
 
   it "can scale coords" do
     v1.scale(2,3,4).should eq CRT::Vector.new(2,6,12)
+  end
+
+  describe "rotation" do
+    it "can rotate around the x axis" do
+      p = CRT::Vector.new(0,1,0).rotate_x(CRT::PI/2)
+      p.should eq CRT::Vector.new(0,0,1)
+    end
+
+    it "can rotate around the y axis" do
+      p = CRT::Vector.new(0,0,1).rotate_y(CRT::PI/2)
+      p.should eq CRT::Vector.new(1,0,0)
+    end
+
+    it "can rotate around the z axis" do
+      p = CRT::Vector.new(0,-1,0).rotate_z(CRT::PI/2)
+      p.should eq CRT::Vector.new(1,0,0)
+    end
+  end
+
+  describe "shearing" do
+    p = CRT::Vector.new(2,3,4)
+
+    it "can shear x relative to y" do
+      p.shear(1).should eq CRT::Vector.new(5,3,4)
+    end
+
+    it "can shear x relative to z" do
+      p.shear(0,1).should eq CRT::Vector.new(6,3,4)
+    end
+
+    it "can shear y relative to x" do
+      p.shear(0,0,1).should eq CRT::Vector.new(2,5,4)
+    end
+
+    it "can shear y relative to z" do
+      p.shear(0,0,0,1).should eq CRT::Vector.new(2,7,4)
+    end
+
+    it "can shear z relative to x" do
+      p.shear(0,0,0,0,1).should eq CRT::Vector.new(2,3,6)
+    end
+
+    it "can shear z relative to y" do
+      p.shear(0,0,0,0,0,1).should eq CRT::Vector.new(2,3,7)
+    end
+  end
+
+  it "can correctly chain multiple transformation calls" do
+    p = CRT::Point.new(1,0,1)
+    expected = CRT::Point.new(15,0,7)
+    p.rotate_x(CRT::PI/2).scale(5,5,5).translate(10,5,7).should eq expected
   end
 end
