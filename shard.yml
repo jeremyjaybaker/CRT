@@ -1,0 +1,9 @@
+name: crt
+version: 0.1.0
+
+authors:
+  - Jeremy Baker <ironclad00@gmail.com>
+
+crystal: 1.1.1
+
+license: MIT
