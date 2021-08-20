@@ -48,12 +48,41 @@ describe CRT::Matrix do
     end
   end
 
+  describe "equality" do
+    context "with matrices of equal dimensions" do
+      context "with exact values" do
+        it "is equal" do
+          CRT::Matrix.new(2,2, 1,2,3,4).should eq CRT::Matrix.new(2,2, 1,2,3,4)
+        end
+      end
+
+      context "with significantly similar values" do
+        it "is equal" do
+          m = CRT::Matrix.new(2,2, 1.0000001,2,3,4)
+          m.should eq CRT::Matrix.new(2,2, 1,2,3,4)
+        end
+      end
+
+      context "with significantly different values" do
+        it "is not equal" do
+          CRT::Matrix.new(2,2, 1.1,2,3,4).should_not eq CRT::Matrix.new(2,2, 1,2,3,4)
+        end
+      end
+    end
+
+    context "with matrices of different dimensions" do
+      it "is not equal" do
+        CRT::Matrix.new(1,4, 1,2,3,4).should_not eq CRT::Matrix.new(4,1, 1,2,3,4)
+      end
+    end
+  end
+
   describe "cloning" do
     mc = m1.clone
 
     it "can make a new copy of its matrix values" do
       mc.should eq m1
-      mc.values.object_id.should_not eq m1.values.object_id
+      mc._values.object_id.should_not eq m1._values.object_id
     end
 
     it "copies its dimensions" do

@@ -6,7 +6,7 @@ require "./matrix_errors"
 # Maybe a source of performance bottlenecks?
 module CRT
   struct Matrix
-    getter m, n, values
+    getter m, n, _values
 
     # Easiest way to make a matrix with hard-coded values.
     def initialize(@m : Int32, @n : Int32, *elements)
@@ -27,21 +27,23 @@ module CRT
       end
 
       # TODO: is this the best way to init a matrix? seems verbose
-      @values = Array(Array(Float64)).new
-      @m.times{ |i| @values << Array(Float64).new }
+      @_values = Array(Array(Float64)).new
+      @m.times{ |i| @_values << Array(Float64).new }
 
       traverse do |i,j|
         index = (i * @n) + j
         if elements[index]?
-          @values[i] << elements[index]
+          @_values[i] << elements[index]
         else
-          @values[i] << 0.0
+          @_values[i] << 0.0
         end
       end
     end
 
     # Mainly used for cloning. You generally won't want to make your arrays manually.
-    def initialize(@m : Int32, @n : Int32, @values : Array(Array(Float64)))
+    def initialize(@_values : Array(Array(Float64)))
+      @m = @_values.size
+      @n = @_values[0].size
     end
 
     def self.identity(m : Int32, n : Int32)
@@ -50,21 +52,12 @@ module CRT
       id
     end
 
-    # Translation matrix to be multiplied against points/vectors
-    def self.translation(x : Float64, y : Float64, z : Float64)
-      newm = Matrix.identity(4,4)
-      newm[0][3] = x
-      newm[1][3] = y
-      newm[2][3] = z
-      newm
-    end
-
     def *(sp : BaseVector)
       self * sp.matrix
     end
 
     def to_a
-      @values.flatten
+      @_values.flatten
     end
 
     def size
@@ -72,7 +65,7 @@ module CRT
     end
 
     def [](key)
-      @values[key]
+      @_values[key]
     end
 
     def square?
@@ -80,7 +73,7 @@ module CRT
     end
 
     def clone
-      Matrix.new(@m,@n,@values.clone)
+      Matrix.new(@_values.clone)
     end
 
     def det
@@ -94,14 +87,14 @@ module CRT
     def +(m : Matrix)
       raise MatrixErrors::MismatchedDimensions.new(size,m.size) unless size == m.size
       make_new do |i,j,newmat|
-        newmat[i][j] = @values[i][j] + m[i][j]
+        newmat[i][j] = @_values[i][j] + m[i][j]
       end
     end
 
     def -(m : Matrix)
       raise MatrixErrors::MismatchedDimensions.new(size,m.size) unless size == m.size
       make_new do |i,j,newmat|
-        newmat[i][j] = @values[i][j] - m[i][j]
+        newmat[i][j] = @_values[i][j] - m[i][j]
       end
     end
 
@@ -109,21 +102,29 @@ module CRT
       raise MatrixErrors::CannotMultiply.new(size,mat.size) unless @n == mat.m
       make_new @m, mat.n do |i,j,newmat|
         newmat[i][j] = @n.times.map do |k|
-          @values[i][k] * mat[k][j]
+          @_values[i][k] * mat[k][j]
         end.sum
       end
     end
 
     def *(d : Float64)
       make_new do |i,j,newmat|
-        newmat[i][j] = @values[i][j] * d
+        newmat[i][j] = @_values[i][j] * d
       end
     end
 
     def /(d : Float64)
       make_new do |i,j,newmat|
-        newmat[i][j] = @values[i][j] / d
+        newmat[i][j] = @_values[i][j] / d
       end
+    end
+
+    def ==(mat : Matrix)
+      return false if mat.size != size
+      traverse do |i,j|
+        return false unless CRT.equal? @_values[i][j], mat[i][j]
+      end
+      true
     end
 
     # Remove the given row and col indices from the matrix
@@ -132,7 +133,7 @@ module CRT
       raise MatrixErrors::DimensionOutOfRange.new("col", col) if col > @n
 
       elements = [] of Float64
-      traverse{ |i,j| elements << @values[i][j] unless i == row || j == col }
+      traverse{ |i,j| elements << @_values[i][j] unless i == row || j == col }
       Matrix.new(@m - 1, @n - 1, elements)
     end
 
@@ -155,7 +156,7 @@ module CRT
 
     def transpose
       make_new @n, @m do |i,j,newmat|
-        newmat[i][j] = @values[j][i]
+        newmat[i][j] = @_values[j][i]
       end
     end
 
