@@ -5,6 +5,10 @@ describe CRT::Point do
   p2 = CRT::Point.new(1,2,3)
   p3 = CRT::Point.new(4,5,6)
 
+  it "can be negated" do
+    (-p1).should eq CRT::Point.new(3,-4,-5)
+  end
+
   it "has a #w of 1" do
     p1.w.should eq 1
   end

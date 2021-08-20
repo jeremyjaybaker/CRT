@@ -8,11 +8,11 @@ module CRT
       def initialize(mat : CRT::Matrix, w : Float64)
         mat_w = mat[3][0]
         if mat_w == 2
-          msg = "Cannot add a point to another point nor multiply/divide from points."
+          msg = "Cannot add a point to another point nor multiply/divide from points. You are seeing this because of w value 2."
         elsif mat_w == -1
-          msg = "Cannot subtract a point from a vector nor multiply/divide from points."
+          msg = "Cannot subtract a point from a vector nor multiply/divide from points. You are seeing this because of w value -1."
         elsif mat_w != w
-          msg = "Calculated w is wrong: #{w}. Likely reasons include subtracting a point from another point."
+          msg = "Calculated w is wrong: #{w}. Likely reasons include subtracting a point from another point or initializing with an invalid matrix."
         end
         super msg
       end
@@ -35,11 +35,11 @@ module CRT
     end
 
     def y
-      @_matrix[0][1]
+      @_matrix[1][0]
     end
 
     def z
-      @_matrix[0][2]
+      @_matrix[2][0]
     end
 
     def w
@@ -55,7 +55,7 @@ module CRT
     end
 
     def -
-      self.class.new(@_matrix * -1)
+      self.class.new(x*-1, y*-1, z*-1)
     end
 
     def /(d : Float64)

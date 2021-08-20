@@ -3,6 +3,7 @@ require "./spec_helper"
 describe CRT::Vector do
   v1 = CRT::Vector.new(1,2,3)
   v2 = CRT::Vector.new(4,5,6)
+  v3 = CRT::Vector.new(2,3,4)
 
   it "can be negated" do
     (-v1).should eq CRT::Vector.new(-1,-2,-3)
@@ -10,6 +11,23 @@ describe CRT::Vector do
 
   it "has a #w of 0" do
     v1.w.should eq 0
+  end
+
+  it "has a magnitude" do
+    v1.magnitude.should be_close 3.7416, 0.001
+  end
+
+  it "has a normal vector" do
+    v1.normal.should eq CRT::Vector.new(0.26726,0.53452,0.80178)
+  end
+
+  it "can compute a dot product with another vector" do
+    v1.dot(v3).should eq 20.0
+  end
+
+  it "can compute a cross product with another vector" do
+    v1.cross(v3).should eq CRT::Vector.new(-1,2,-1)
+    v3.cross(v1).should eq CRT::Vector.new(1,-2,1)
   end
 
   it "cannot be initialized with a bad matrix" do

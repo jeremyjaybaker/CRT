@@ -24,6 +24,11 @@ describe CRT::Color do
     end
   end
 
+  it "can clamp its values" do
+    c = CRT::Color.new(-0.5, 0.5, 1.5)
+    c.clamp.should eq CRT::Color.new(0,0.5,1)
+  end
+
   it "can be added to another color" do
     (c1 + c2).should eq CRT::Color.new(5,7,9)
   end

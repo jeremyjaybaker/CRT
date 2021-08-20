@@ -1,5 +1,5 @@
 module CRT
-  class Color
+  struct Color
     class InvalidMatrix < Exception
       def initialize(mat : Matrix)
         super "Cannot create color with matrix #{mat} of size #{mat.size}."
@@ -11,7 +11,12 @@ module CRT
     end
 
     def initialize(@_matrix : Matrix)
-      raise InvalidMatrix.new(@_matrix) unless @_matrix.size == [3,1]
+      validate!
+    end
+
+    def initialize(arr : Array(Array(Float64)))
+      @_matrix = Matrix.new(arr)
+      validate!
     end
 
     def r
@@ -26,12 +31,32 @@ module CRT
       @_matrix[2][0]
     end
 
+    def self.black
+      new [[0.0],[0.0],[0.0]]
+    end
+
+    def self.white
+      new [[1.0],[1.0],[1.0]]
+    end
+
     def to_matrix
       @_matrix
     end
 
+    def to_a
+      @_matrix.to_a
+    end
+
     def ==(c : Color)
       @_matrix == c.to_matrix
+    end
+
+    def clamp
+      Color.new([
+        [r.clamp(0.0,1.0)],
+        [g.clamp(0.0,1.0)],
+        [b.clamp(0.0,1.0)]
+      ])
     end
 
     def +(c : Color)
@@ -47,13 +72,15 @@ module CRT
     end
 
     def *(c : Color)
-      Color.new(
-        Matrix.new([
-          [r * c.r],
-          [g * c.g],
-          [b * c.b]
-        ])
-      )
+      Color.new([
+        [r * c.r],
+        [g * c.g],
+        [b * c.b]
+      ])
+    end
+
+    private def validate!
+      raise InvalidMatrix.new(@_matrix) unless @_matrix.size == [3,1]
     end
   end
 end

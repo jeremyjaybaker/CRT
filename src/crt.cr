@@ -4,6 +4,7 @@ require "./base_vector"
 require "./point"
 require "./vector"
 require "./color"
+require "./pixel_canvas"
 
 module CRT
   # Used for floating point comparison "good enough" approximations
