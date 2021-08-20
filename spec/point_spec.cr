@@ -48,8 +48,8 @@ describe CRT::Point do
   it "cannot be added to another point" do
     begin
       p2 + p3
-    rescue CRT::BaseVector::InvalidMatrix
-      true.should be_true
+    rescue e : CRT::BaseVector::InvalidMatrix
+      e.to_s.should match /Cannot add a point to another point/
       next
     end
     false.should be_true
@@ -63,8 +63,8 @@ describe CRT::Point do
   it "cannot be subtracted from another point" do
     begin
       p2 - p3
-    rescue CRT::BaseVector::InvalidMatrix
-      true.should be_true
+    rescue e : CRT::BaseVector::InvalidMatrix
+      e.to_s.should match /Calculated w is wrong/
       next
     end
     false.should be_true

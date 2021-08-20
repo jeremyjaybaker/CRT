@@ -7,8 +7,16 @@ module CRT
     getter matrix : CRT::Matrix
 
     class InvalidMatrix < Exception
-      def initialize(mat : CRT::Matrix)
-        super "BaseVector cannot be created with #{mat.size} of #{mat.to_a}."
+      def initialize(mat : CRT::Matrix, w : Float64)
+        mat_w = mat[3][0]
+        if mat_w == 2
+          msg = "Cannot add a point to another point nor multiply/divide from points."
+        elsif mat_w == -1
+          msg = "Cannot subtract a point from a vector nor multiply/divide from points."
+        elsif mat_w != w
+          msg = "Calculated w is wrong: #{w}. Likely reasons include subtracting a point from another point."
+        end
+        super msg
       end
     end
 
@@ -19,7 +27,9 @@ module CRT
 
     # Best way to initialize when a matrix already exists
     def initialize(@matrix : Matrix)
-      raise InvalidMatrix.new(@matrix) unless @matrix.size == [4,1] && @matrix[3][0] == w
+      unless @matrix.size == [4,1] && @matrix[3][0] == w
+        raise InvalidMatrix.new(@matrix,w.to_f)
+      end
     end
 
     def x
@@ -34,12 +44,12 @@ module CRT
       @matrix[0][2]
     end
 
-    def to_a
-      @matrix.to_a
-    end
-
     def w
       raise "Must be defined in child"
+    end
+
+    def to_a
+      @matrix.to_a
     end
 
     def -
