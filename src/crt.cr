@@ -3,6 +3,7 @@ require "./matrix_errors"
 require "./base_vector"
 require "./point"
 require "./vector"
+require "./color"
 
 module CRT
   # Used for floating point comparison "good enough" approximations

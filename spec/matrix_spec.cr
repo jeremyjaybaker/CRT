@@ -39,7 +39,7 @@ describe CRT::Matrix do
       it "raises an exception" do
         begin
           CRT::Matrix.new(2,2, 1,2,3,4,5)[1][1]
-        rescue MatrixErrors::MismatchedElementCount
+        rescue CRT::MatrixErrors::MismatchedElementCount
           true.should be_true
           next
         end
@@ -131,7 +131,7 @@ describe CRT::Matrix do
       it "raises an exception if #invert is called" do
         begin
           mat.inverse
-        rescue MatrixErrors::NotInvertible
+        rescue CRT::MatrixErrors::NotInvertible
           true.should be_true
           next
         end
@@ -163,7 +163,7 @@ describe CRT::Matrix do
         it "throws an exception" do
           begin
             CRT::Matrix.new(5,4).det
-          rescue MatrixErrors::NotSquare
+          rescue CRT::MatrixErrors::NotSquare
             true.should be_true
             next
           end
@@ -176,7 +176,7 @@ describe CRT::Matrix do
       it "throws an exception" do
         begin
           CRT::Matrix.new(1,2).det
-        rescue MatrixErrors::NotSquare
+        rescue CRT::MatrixErrors::NotSquare
           true.should be_true
           next
         end
@@ -198,7 +198,7 @@ describe CRT::Matrix do
       it "raises an exception" do
         begin
           m5.submatrix(10,1)
-        rescue MatrixErrors::DimensionOutOfRange
+        rescue CRT::MatrixErrors::DimensionOutOfRange
           true.should be_true
           next
         end
@@ -210,7 +210,7 @@ describe CRT::Matrix do
       it "raises an exception" do
         begin
           m5.submatrix(1,10)
-        rescue MatrixErrors::DimensionOutOfRange
+        rescue CRT::MatrixErrors::DimensionOutOfRange
           true.should be_true
           next
         end
@@ -230,7 +230,7 @@ describe CRT::Matrix do
       it "raises an exception" do
         begin
           m1 + m3
-        rescue MatrixErrors::MismatchedDimensions
+        rescue CRT::MatrixErrors::MismatchedDimensions
           true.should be_true
           next
         end
@@ -250,7 +250,7 @@ describe CRT::Matrix do
       it "raises an exception" do
         begin
           m1 - m3
-        rescue MatrixErrors::MismatchedDimensions
+        rescue CRT::MatrixErrors::MismatchedDimensions
           true.should be_true
           next
         end
@@ -284,7 +284,7 @@ describe CRT::Matrix do
       it "raises an exception" do
         begin
           ex2 * ex1
-        rescue MatrixErrors::CannotMultiply
+        rescue CRT::MatrixErrors::CannotMultiply
           true.should be_true
           next
         end

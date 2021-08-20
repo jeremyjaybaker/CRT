@@ -49,8 +49,9 @@ module CRT
       id
     end
 
+    # Allows multiplication between points and vectors
     def *(sp : BaseVector)
-      self * sp.matrix
+      self * sp.to_matrix
     end
 
     def to_a
@@ -126,8 +127,8 @@ module CRT
 
     # Remove the given row and col indices from the matrix
     def submatrix(row : Int32, col : Int32)
-      raise MatrixErrors::DimensionOutOfRange.new("row", row) if row > @m
-      raise MatrixErrors::DimensionOutOfRange.new("col", col) if col > @n
+      raise MatrixErrors::DimensionOutOfRange.new(row.to_f,col.to_f,self) if row > @m
+      raise MatrixErrors::DimensionOutOfRange.new(row.to_f,col.to_f,self) if col > @n
 
       elements = [] of Float64
       traverse{ |i,j| elements << @_values[i][j] unless i == row || j == col }

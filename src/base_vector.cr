@@ -4,8 +4,6 @@
 # calculations more smooth.
 module CRT
   abstract struct BaseVector
-    getter matrix : CRT::Matrix
-
     class InvalidMatrix < Exception
       def initialize(mat : CRT::Matrix, w : Float64)
         mat_w = mat[3][0]
@@ -22,26 +20,26 @@ module CRT
 
     # Best way to initialize from hard-coded values
     def initialize(x : Float64, y : Float64, z : Float64)
-      @matrix = CRT::Matrix.new(4,1, x, y, z, w)
+      @_matrix = CRT::Matrix.new(4,1, x, y, z, w)
     end
 
     # Best way to initialize when a matrix already exists
-    def initialize(@matrix : Matrix)
-      unless @matrix.size == [4,1] && @matrix[3][0] == w
-        raise InvalidMatrix.new(@matrix,w.to_f)
+    def initialize(@_matrix : Matrix)
+      unless @_matrix.size == [4,1] && @_matrix[3][0] == w
+        raise InvalidMatrix.new(@_matrix,w.to_f)
       end
     end
 
     def x
-      @matrix[0][0]
+      @_matrix[0][0]
     end
 
     def y
-      @matrix[0][1]
+      @_matrix[0][1]
     end
 
     def z
-      @matrix[0][2]
+      @_matrix[0][2]
     end
 
     def w
@@ -49,31 +47,35 @@ module CRT
     end
 
     def to_a
-      @matrix.to_a
+      @_matrix.to_a
+    end
+
+    def to_matrix
+      @_matrix
     end
 
     def -
-      self.class.new(@matrix * -1)
+      self.class.new(@_matrix * -1)
     end
 
     def /(d : Float64)
-      self.class.new(@matrix / d)
+      self.class.new(@_matrix / d)
     end
 
     def *(d : Float64)
-      self.class.new(@matrix * d)
+      self.class.new(@_matrix * d)
     end
 
     def +(vec : BaseVector)
-      self.class.new(@matrix + vec.matrix)
+      self.class.new(@_matrix + vec.to_matrix)
     end
 
     def -(vec : BaseVector)
-      self.class.new(@matrix - vec.matrix)
+      self.class.new(@_matrix - vec.to_matrix)
     end
 
     def ==(b : BaseVector)
-      @matrix == b.matrix
+      @_matrix == b.to_matrix
     end
 
     def translate(x : Float64, y : Float64, z : Float64)
