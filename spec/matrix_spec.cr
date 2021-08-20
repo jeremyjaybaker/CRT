@@ -61,42 +61,6 @@ describe CRT::Matrix do
     end
   end
 
-  describe "translation" do
-    context "multiplied by a vector" do
-      vec = CRT::Vector.new(-3,4,5)
-
-      it "returns the vector" do
-        CRT::Matrix.translation(5,-3,2) * vec == vec
-      end
-    end
-
-    context "multiplied by a point" do
-      p = CRT::Point.new(-3,4,5)
-
-      it "translates the point" do
-        CRT::Matrix.translation(5,-3,2) * p == CRT::Point.new(-8,7,3)
-      end
-    end
-  end
-
-  describe "scaling" do
-    context "multiplied by a vector" do
-      vec = CRT::Vector.new(-3,4,5)
-
-      it "scales the vector" do
-        CRT::Matrix.scale(2,3,4) * vec == CRT::Vector.new(-6,12,20)
-      end
-    end
-
-    context "multiplied by a point" do
-      p = CRT::Point.new(-3,4,5)
-
-      it "translates the point" do
-        CRT::Matrix.scale(2,3,4) * p == CRT::Point.new(-6,12,20)
-      end
-    end
-  end
-
   describe "the cofactor matrix" do
     context "with a 2x2" do
       it "returns a copy of itself" do

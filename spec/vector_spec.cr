@@ -14,6 +14,16 @@ describe CRT::Vector do
     v1.w.should eq 0
   end
 
+  it "cannot be initialized with a bad matrix" do
+    begin
+      CRT::Vector.new(CRT::Matrix.new(4,1, 1,2,3,99))
+    rescue CRT::BaseVector::InvalidMatrix
+      true.should be_true
+      next
+    end
+    false.should be_false
+  end
+
   it "can be multiplied by a scalar" do
     (v1 * 2).should eq CRT::Vector.new(2,4,6)
   end
@@ -28,5 +38,13 @@ describe CRT::Vector do
 
   it "can be subtracted from another vector" do
     (v1 - v2).should eq CRT::Vector.new(-3,-3,-3)
+  end
+
+  it "translates coords to a copy of itself" do
+    v1.translate(1,2,3).should eq CRT::Vector.new(1,2,3)
+  end
+
+  it "can scale coords" do
+    v1.scale(2,3,4).should eq CRT::Vector.new(2,6,12)
   end
 end

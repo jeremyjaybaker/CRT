@@ -50,14 +50,7 @@ module CRT
       id
     end
 
-    def self.scale(x : Float64, y : Float64, z : Float64)
-      newm = Matrix.identity(4,4)
-      newm[0][0] = x
-      newm[1][1] = y
-      newm[2][2] = z
-      newm
-    end
-
+    # Translation matrix to be multiplied against points/vectors
     def self.translation(x : Float64, y : Float64, z : Float64)
       newm = Matrix.identity(4,4)
       newm[0][3] = x
