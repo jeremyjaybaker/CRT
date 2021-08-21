@@ -11,7 +11,7 @@ Generate docs using `crystal docs` and see docs/CRT.html.
    ```yaml
    dependencies:
      crt:
-       github: ironclad00/crt
+       github: jeremyjaybaker/crt
    ```
 
 2. Run `shards install`
@@ -30,7 +30,7 @@ TODO: Write development instructions here
 
 ## Contributing
 
-1. Fork it (<https://github.com/ironclad00/crt/fork>)
+1. Fork it (<https://github.com/jeremyjaybaker/crt/fork>)
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
@@ -38,4 +38,4 @@ TODO: Write development instructions here
 
 ## Contributors
 
-- [Jeremy Baker](https://github.com/ironclad00) - creator and maintainer
+- [Jeremy Baker](https://github.com/jeremyjaybaker) - creator and maintainer
