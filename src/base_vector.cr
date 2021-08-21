@@ -1,8 +1,9 @@
-# BaseVector is used as a superclass to make Point and Vector definitions
-# more convenient. The two classes are almost identical except for their
-# value of #w (0 for vector, 1 for point) which makes the linear algebra
-# calculations more smooth.
 module CRT
+  # BaseVector is used as a superclass to make Point and Vector definitions
+  # more convenient. The two classes are mostly identical except for their
+  # value of #w (0 for vector, 1 for point) which makes the linear algebra
+  # calculations more smooth. Vector also has a few more calculations in it
+  # like #cross and #dot, but majority functionality is still shared.
   abstract struct BaseVector
     class InvalidMatrix < Exception
       def initialize(mat : CRT::Matrix, w : Float64)

@@ -18,6 +18,13 @@ module CRT
       @_pixels.sample.sample
     end
 
+    def draw(p : CRT::Point, c : CRT::Color)
+      self[p.x.to_i][p.y.to_i] = c
+      true
+    rescue IndexError
+      false
+    end
+
     def [](key)
       @_pixels[key]
     end
@@ -30,6 +37,13 @@ module CRT
     # directly to a new file.
     def to_ppm(mcv : Int32 = 255)
       "P3\n#{@x} #{@y}\n#{mcv}\n#{ppm_grid_string(mcv)}\n"
+    end
+
+    def write_ppm(path : String)
+      File.touch(path)
+      File.open(path, "w") do |f|
+        f << to_ppm
+      end
     end
 
     # TODO: Lots of temp string creation going on here but not sure how to optimize.

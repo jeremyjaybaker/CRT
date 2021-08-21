@@ -1,8 +1,8 @@
-# Representation of a float64-based matrix of arbitrary dimensions.
-#
-# TODO: There's a lot of initializing a matrix with 0, then setting values.
-# Maybe a source of performance bottlenecks?
 module CRT
+  # Representation of a float64-based matrix of arbitrary dimensions.
+  #
+  # TODO: There's a lot of initializing a matrix with 0, then setting values.
+  # Maybe a source of performance bottlenecks?
   struct Matrix
     getter m, n, _values
 

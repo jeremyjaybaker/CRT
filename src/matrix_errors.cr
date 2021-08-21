@@ -1,6 +1,6 @@
-# A collection of error classes that provide dev-friendly messages
-# for all the things that can go wrong with matrices.
 module CRT
+  # A collection of error classes that provide dev-friendly messages
+  # for all the things that can go wrong with matrices.
   module MatrixErrors
     # Only really used when the Matrix splat initializer method when an
     # incorrect number of elements is given relative to the mxn value.

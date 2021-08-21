@@ -1,6 +1,8 @@
 # crt
 
-TODO: Write a description here
+CRT, Crystal Ray Tracer, is a library for rendering 3D graphics using ray tracing based on The Ray Tracing Challenge book.
+
+Check out the generated docs in docs/CRT.html.
 
 ## Installation
 
@@ -9,10 +11,12 @@ TODO: Write a description here
    ```yaml
    dependencies:
      crt:
-       github: your-github-user/crt
+       github: ironclad00/crt
    ```
 
 2. Run `shards install`
+
+3. Make sure test code is passing by running `crystal spec`
 
 ## Usage
 
@@ -28,7 +32,7 @@ TODO: Write development instructions here
 
 ## Contributing
 
-1. Fork it (<https://github.com/your-github-user/crt/fork>)
+1. Fork it (<https://github.com/ironclad00/crt/fork>)
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
@@ -36,4 +40,4 @@ TODO: Write development instructions here
 
 ## Contributors
 
-- [Jeremy Baker](https://github.com/your-github-user) - creator and maintainer
+- [Jeremy Baker](https://github.com/ironclad00) - creator and maintainer

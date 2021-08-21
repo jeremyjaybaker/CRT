@@ -35,8 +35,16 @@ module CRT
       new [[0.0],[0.0],[0.0]]
     end
 
+    def self.grey
+      new [[0.312],[0.312],[0.312]]
+    end
+
     def self.white
       new [[1.0],[1.0],[1.0]]
+    end
+
+    def self.red
+      new [[1.0], [0.0], [0.0]]
     end
 
     def to_matrix

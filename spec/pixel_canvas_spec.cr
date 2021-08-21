@@ -5,10 +5,25 @@ describe CRT::PixelCanvas do
     CRT::PixelCanvas.new(10,20).sample.should eq CRT::Color.black
   end
 
-  it "can write and read colors to/from a pixel" do
-    pc = CRT::PixelCanvas.new(10,20)
-    pc[2][2] = CRT::Color.white
-    pc[2][2].should eq CRT::Color.white
+  describe "writing/reading colors to/from a pixel" do
+    it "can use indices" do
+      pc = CRT::PixelCanvas.new(10,20)
+      pc[2][2] = CRT::Color.white
+      pc[2][2].should eq CRT::Color.white
+    end
+
+    context "with #draw" do
+      it "draws the pixel when in bounds" do
+        pc = CRT::PixelCanvas.new(10,20)
+        pc.draw(CRT::Point.new(2,2,0), CRT::Color.white).should be_true
+        pc[2][2].should eq CRT::Color.white
+      end
+
+      it "returns false if out of bounds" do
+        pc = CRT::PixelCanvas.new(10,20)
+        pc.draw(CRT::Point.new(99,99,0), CRT::Color.white).should be_false
+      end
+    end
   end
 
   describe "the PPM format" do
