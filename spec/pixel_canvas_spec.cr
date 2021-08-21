@@ -22,22 +22,38 @@ describe CRT::PixelCanvas do
       it "returns false if out of bounds" do
         pc = CRT::PixelCanvas.new(10,20)
         pc.draw(CRT::Point.new(99,99,0), CRT::Color.white).should be_false
+        pc.draw(CRT::Point.new(-1,99,0), CRT::Color.white).should be_false
       end
     end
   end
 
   describe "the PPM format" do
-    it "can return a string in PPM format" do
-      pc = CRT::PixelCanvas.new(5,3)
-      pc[0][0] = CRT::Color.new(1.5,0,0)
-      pc[2][1] = CRT::Color.new(0,0.5,0)
-      pc[4][2] = CRT::Color.new(-0.5,0,1)
-      pixel_lines = pc.to_ppm.split("\n")[3..5].join("\n")
-      pixel_lines.should eq <<-STR
+    context "using natual origin" do
+      it "returns a string in PPM format with origin at top-left" do
+        pc = CRT::PixelCanvas.new(5,3)
+        pc[0][0] = CRT::Color.new(1.5,0,0)
+        pc[2][1] = CRT::Color.new(0,0.5,0)
+        pc[4][2] = CRT::Color.new(-0.5,0,1)
+        pixel_lines = pc.to_ppm(natural_origin: true).split("\n")[3..5].join("\n")
+        pixel_lines.should eq <<-STR
 255 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 0 0 0 0 0 0 0 128 0 0 0 0 0 0 0
 0 0 0 0 0 0 0 0 0 0 0 0 0 0 255
 STR
+      end
+
+      it "returns a string in PPM format with origin at bottom-left" do
+        pc = CRT::PixelCanvas.new(5,3)
+        pc[0][0] = CRT::Color.new(1.5,0,0)
+        pc[2][1] = CRT::Color.new(0,0.5,0)
+        pc[4][2] = CRT::Color.new(-0.5,0,1)
+        pixel_lines = pc.to_ppm.split("\n")[3..5].join("\n")
+        pixel_lines.should eq <<-STR
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 255
+0 0 0 0 0 0 0 128 0 0 0 0 0 0 0
+255 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+STR
+      end
     end
 
     it "wont write lines longer than 70 chars" do

@@ -4,6 +4,10 @@ CRT, Crystal Ray Tracer, is a library for rendering 3D graphics using ray tracin
 
 Generate docs using `crystal docs` and see docs/CRT.html.
 
+## Project Samples
+
+Some code from the book is "extra" and doesn't directly contribute to the ray tracer, but can be run as a demo/sample. These files exist in src/crt_samples/ and have bash scripts that can execute the given sample.
+
 ## Installation
 
 1. Add the dependency to your `shard.yml`:

@@ -62,7 +62,14 @@ module CRT
       [@m, @n]
     end
 
+    # Array-like access for the matrix.
+    # Maybe make wrap-around access a togglable option? Not sure
+    # that's even needed but that is how arrays work by default.
+    # It might be a handy mechanism but it also doesn't make a lot
+    # of intuitive sense when matrices are involved and has caused
+    # at least 1 weird bug so far.
     def [](key)
+      raise IndexError.new if key < 0
       @_values[key]
     end
 

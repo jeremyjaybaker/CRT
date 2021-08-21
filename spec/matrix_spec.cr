@@ -22,6 +22,16 @@ describe CRT::Matrix do
     m4.transpose.should eq CRT::Matrix.new(4,2, 1,5,2,6,3,7,4,8)
   end
 
+  it "cannot access negative-index elements" do
+    begin
+      m1[0][-1]
+    rescue IndexError
+      true.should be_true
+      next
+    end
+    false.should be_false
+  end
+
   describe "initialization" do
     context "with values equal to element count" do
       it "can be initialized" do
