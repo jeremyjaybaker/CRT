@@ -2,7 +2,7 @@
 
 CRT, Crystal Ray Tracer, is a library for rendering 3D graphics using ray tracing based on The Ray Tracing Challenge book.
 
-Check out the generated docs in docs/CRT.html.
+Generate docs using `crystal docs` and see docs/CRT.html.
 
 ## Installation
 
