@@ -16,8 +16,6 @@ Generate docs using `crystal docs` and see docs/CRT.html.
 
 2. Run `shards install`
 
-3. Make sure test code is passing by running `crystal spec`
-
 ## Usage
 
 ```crystal
