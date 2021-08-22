@@ -15,8 +15,7 @@ describe CRT::Point do
 
   it "cannot be initialized with a bad matrix" do
     begin
-      # Ie, points should not be added to other points
-      p1 + CRT::Point.new(1,2,3)
+      CRT::Point.new(CRT::Matrix.new(2,2, 1,2,3,4))
     rescue CRT::BaseVector::InvalidMatrix
       true.should be_true
       next
@@ -53,7 +52,7 @@ describe CRT::Point do
     begin
       p2 + p3
     rescue e : CRT::BaseVector::InvalidMatrix
-      e.to_s.should match /Cannot add a point to another point/
+      e.to_s.should match /Cannot initialize/
       next
     end
     false.should be_true
@@ -64,14 +63,9 @@ describe CRT::Point do
     (p2 - vec).should eq CRT::Point.new(0,1,2)
   end
 
-  it "cannot be subtracted from another point" do
-    begin
-      p2 - p3
-    rescue e : CRT::BaseVector::InvalidMatrix
-      e.to_s.should match /Calculated w is wrong/
-      next
-    end
-    false.should be_true
+  it "can be subtracted from another point" do
+    (p2 - p3).should eq CRT::Vector.new(-3,-3,-3)
+    (p2 - p3).class.should eq CRT::Vector
   end
 
   it "translates coords" do
@@ -81,6 +75,12 @@ describe CRT::Point do
   it "can scale coords" do
     p = CRT::Point.new(-4,6,8)
     p.scale(2,3,4).should eq CRT::Point.new(-8,18,32)
+  end
+
+  it "can correctly chain multiple transformation calls" do
+    p = CRT::Point.new(1,0,1)
+    expected = CRT::Point.new(15,0,7)
+    p.rotate_x(CRT::PI/2).scale(5,5,5).translate(10,5,7).should eq expected
   end
 
   describe "rotation" do

@@ -6,16 +6,8 @@ module CRT
   # like #cross and #dot, but majority functionality is still shared.
   abstract struct BaseVector
     class InvalidMatrix < Exception
-      def initialize(mat : CRT::Matrix, w : Float64)
-        mat_w = mat[3][0]
-        if mat_w == 2
-          msg = "Cannot add a point to another point nor multiply/divide from points. You are seeing this because of w value 2."
-        elsif mat_w == -1
-          msg = "Cannot subtract a point from a vector nor multiply/divide from points. You are seeing this because of w value -1."
-        elsif mat_w != w
-          msg = "Calculated w is wrong: #{w}. Likely reasons include subtracting a point from another point or initializing with an invalid matrix."
-        end
-        super msg
+      def initialize(mat : CRT::Matrix)
+        super "Cannot initialize vector-based class with matrix #{mat}."
       end
     end
 
@@ -27,7 +19,27 @@ module CRT
     # Best way to initialize when a matrix already exists
     def initialize(@_matrix : Matrix)
       unless @_matrix.size == [4,1] && @_matrix[3][0] == w
-        raise InvalidMatrix.new(@_matrix,w.to_f)
+        raise InvalidMatrix.new(@_matrix)
+      end
+    end
+
+    # Makes either a new Point or a Vector depending on the value
+    # of w being passed in. This makes it very easy to just perform
+    # math operations and get the expected class in return.
+    #
+    # NOTE: this factory returns union type of Base+ and will likely
+    # require some conversions during operations. This isn't as
+    # elegant as I'd like it to be, but not sure what to do about that
+    # for now. This is also bad design as the parent should not have
+    # any concept of it's child classes.
+    def self.from(mat : Matrix)
+      mat_w = mat[3][0]
+      if mat_w == 0
+        CRT::Vector.new(mat)
+      elsif mat_w == 1
+        CRT::Point.new(mat)
+      else
+        raise InvalidMatrix.new(mat)
       end
     end
 
@@ -60,19 +72,19 @@ module CRT
     end
 
     def /(d : Float64)
-      self.class.new(@_matrix / d)
+      self.class.from(@_matrix / d)
     end
 
     def *(d : Float64)
-      self.class.new(@_matrix * d)
+      self.class.from(@_matrix * d)
     end
 
     def +(vec : BaseVector)
-      self.class.new(@_matrix + vec.to_matrix)
+      self.class.from(@_matrix + vec.to_matrix)
     end
 
     def -(vec : BaseVector)
-      self.class.new(@_matrix - vec.to_matrix)
+      self.class.from(@_matrix - vec.to_matrix)
     end
 
     def ==(b : BaseVector)
@@ -86,7 +98,7 @@ module CRT
         [0.0, 0.0, 1.0, z],
         [0.0, 0.0, 0.0, 1.0]
       ]
-      self.class.new(CRT::Matrix.new(arr) * self)
+      self.class.from(CRT::Matrix.new(arr) * self)
     end
 
     def scale(x : Float64, y : Float64, z : Float64)
@@ -96,7 +108,7 @@ module CRT
         [0.0, 0.0, z,   0.0],
         [0.0, 0.0, 0.0, 1.0]
       ]
-      self.class.new(CRT::Matrix.new(arr) * self)
+      self.class.from(CRT::Matrix.new(arr) * self)
     end
 
     def rotate_x(rad : Float64)
@@ -107,7 +119,7 @@ module CRT
         [0.0, sin, cos,    0.0],
         [0.0, 0.0, 0.0,    1.0]
       ]
-      self.class.new(CRT::Matrix.new(arr) * self)
+      self.class.from(CRT::Matrix.new(arr) * self)
     end
 
     def rotate_y(rad : Float64)
@@ -118,7 +130,7 @@ module CRT
         [sin*-1, 0.0, cos, 0.0],
         [0.0,    0.0, 0.0, 1.0]
       ]
-      self.class.new(CRT::Matrix.new(arr) * self)
+      self.class.from(CRT::Matrix.new(arr) * self)
     end
 
     def rotate_z(rad : Float64)
@@ -129,7 +141,7 @@ module CRT
         [0.0, 0.0,    1.0, 0.0],
         [0.0, 0.0,    0.0, 1.0]
       ]
-      self.class.new(CRT::Matrix.new(arr) * self)
+      self.class.from(CRT::Matrix.new(arr) * self)
     end
 
     def shear(a : Float64,       b : Float64 = 0.0, c : Float64 = 0.0,
@@ -140,7 +152,7 @@ module CRT
         [e,   f,   1.0, 0.0],
         [0.0, 0.0, 0.0, 1.0]
       ]
-      self.class.new(CRT::Matrix.new(arr) * self)
+      self.class.from(CRT::Matrix.new(arr) * self)
     end
 
     private def trig_vals(rad : Float64)

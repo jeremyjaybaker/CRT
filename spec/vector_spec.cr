@@ -108,10 +108,4 @@ describe CRT::Vector do
       p.shear(0,0,0,0,0,1).should eq CRT::Vector.new(2,3,7)
     end
   end
-
-  it "can correctly chain multiple transformation calls" do
-    p = CRT::Point.new(1,0,1)
-    expected = CRT::Point.new(15,0,7)
-    p.rotate_x(CRT::PI/2).scale(5,5,5).translate(10,5,7).should eq expected
-  end
 end

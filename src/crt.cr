@@ -4,6 +4,8 @@ require "./base_vector"
 require "./point"
 require "./vector"
 require "./color"
+require "./ray"
+# These might not be needed in core lib
 require "./pixel_canvas"
 
 module CRT
