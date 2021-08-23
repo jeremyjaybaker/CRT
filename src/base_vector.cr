@@ -92,71 +92,28 @@ module CRT
     end
 
     def translate(x : Float64, y : Float64, z : Float64)
-      arr = [
-        [1.0, 0.0, 0.0, x],
-        [0.0, 1.0, 0.0, y],
-        [0.0, 0.0, 1.0, z],
-        [0.0, 0.0, 0.0, 1.0]
-      ]
-      self.class.from(CRT::Matrix.new(arr) * self)
+      self.class.from(Matrices.translation(x,y,z) * self)
     end
 
     def scale(x : Float64, y : Float64, z : Float64)
-      arr = [
-        [x,   0.0, 0.0, 0.0],
-        [0.0, y,   0.0, 0.0],
-        [0.0, 0.0, z,   0.0],
-        [0.0, 0.0, 0.0, 1.0]
-      ]
-      self.class.from(CRT::Matrix.new(arr) * self)
+      self.class.from(Matrices.scale(x,y,z) * self)
     end
 
     def rotate_x(rad : Float64)
-      sin,cos = trig_vals(rad)
-      arr = [
-        [1.0, 0.0, 0.0,    0.0],
-        [0.0, cos, sin*-1, 0.0],
-        [0.0, sin, cos,    0.0],
-        [0.0, 0.0, 0.0,    1.0]
-      ]
-      self.class.from(CRT::Matrix.new(arr) * self)
+      self.class.from(Matrices.rotation_x(rad) * self)
     end
 
     def rotate_y(rad : Float64)
-      sin,cos = trig_vals(rad)
-      arr = [
-        [cos,    0.0, sin, 0.0],
-        [0.0,    1.0, 0.0, 0.0],
-        [sin*-1, 0.0, cos, 0.0],
-        [0.0,    0.0, 0.0, 1.0]
-      ]
-      self.class.from(CRT::Matrix.new(arr) * self)
+      self.class.from(Matrices.rotation_y(rad) * self)
     end
 
     def rotate_z(rad : Float64)
-      sin,cos = trig_vals(rad)
-      arr = [
-        [cos, sin*-1, 0.0, 0.0],
-        [sin, cos,    0.0, 0.0],
-        [0.0, 0.0,    1.0, 0.0],
-        [0.0, 0.0,    0.0, 1.0]
-      ]
-      self.class.from(CRT::Matrix.new(arr) * self)
+      self.class.from(Matrices.rotation_z(rad) * self)
     end
 
     def shear(a : Float64,       b : Float64 = 0.0, c : Float64 = 0.0,
               d : Float64 = 0.0, e : Float64 = 0.0, f : Float64 = 0.0)
-      arr = [
-        [1.0, a,   b,   0.0],
-        [c,   1.0, d,   0.0],
-        [e,   f,   1.0, 0.0],
-        [0.0, 0.0, 0.0, 1.0]
-      ]
-      self.class.from(CRT::Matrix.new(arr) * self)
-    end
-
-    private def trig_vals(rad : Float64)
-      [Math.sin(rad), Math.cos(rad)]
+      self.class.from(Matrices.shear(a,b,c,d,e,f) * self)
     end
   end
 end

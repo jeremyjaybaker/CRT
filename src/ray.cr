@@ -5,25 +5,44 @@ module CRT
     def initialize(@origin : CRT::Point, @path : CRT::Vector)
     end
 
-    def intersection(s : CRT::Sphere)
-      sphere_to_ray = (origin - s.position).as CRT::Vector
+    def self.hit(s : Array(Intersection)) : (Intersection | Nil)
+      positives = s.select{ |i| i.t > 0 }
+      positives.any? ? positives.min_by{ |i| i.t } : nil
+    end
+
+    # Applies the transform matrix to the ray
+    def transform(mat : Matrix)
+      Ray.new(
+        CRT::Point.new(mat * origin),
+        CRT::Vector.new(mat * path))
+    end
+
+    def intersections(s : CRT::Sphere)
+      sphere_to_ray = (origin - CRT::Point.new(0,0,0)).as CRT::Vector
       a = path.dot(path)
       b = 2 * path.dot(sphere_to_ray)
       c = sphere_to_ray.dot(sphere_to_ray) - 1
       disc = b**2 - 4*a*c
 
       if disc < 0
-        [] of Float64
+        [] of Intersection
       else
-        [(-b-Math.sqrt(disc))/(2*a), (-b+Math.sqrt(disc))/(2*a)]
+        [
+          Intersection.new((-b-Math.sqrt(disc))/(2*a), s),
+          Intersection.new((-b+Math.sqrt(disc))/(2*a), s)
+        ]
       end
     end
   end
 
+  # TODO: not sure if this is a temporary struct from the book
+  # or not, but either remove it or put it in sphere.cr eventually.
   struct Sphere
     getter radius : Float64, position : CRT::Point
+    property transform : CRT::Matrix
 
     def initialize(@radius : Float64, @position : CRT::Point)
+      @transform = Matrix.identity(4,4)
     end
   end
 end

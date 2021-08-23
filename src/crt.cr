@@ -1,10 +1,12 @@
 require "./matrix"
 require "./matrix_errors"
+require "./matrices"
 require "./base_vector"
 require "./point"
 require "./vector"
 require "./color"
 require "./ray"
+require "./intersection"
 # These might not be needed in core lib
 require "./pixel_canvas"
 
