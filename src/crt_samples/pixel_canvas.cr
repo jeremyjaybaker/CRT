@@ -1,13 +1,13 @@
-module CRT
+module CRTSamples
   # Array-based structure that operates on individual pixels and can output
   # PPM file format.
   # 0,0 is treated as the bottom-left corner.
   class PixelCanvas
     getter x : Int32, y : Int32
 
-    alias PixelGrid = Array(Array(Color))
+    alias PixelGrid = Array(Array(CRT::Color))
 
-    def initialize(@x : Int32, @y : Int32, base : Color = Color.black)
+    def initialize(@x : Int32, @y : Int32, base : CRT::Color = CRT::Color.black)
       @_pixels = PixelGrid.new
       @x.times do |i|
         @y.times do |j|

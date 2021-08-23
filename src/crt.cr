@@ -7,8 +7,7 @@ require "./vector"
 require "./color"
 require "./ray"
 require "./intersection"
-# These might not be needed in core lib
-require "./pixel_canvas"
+require "./sphere"
 
 module CRT
   # Used for floating point comparison "good enough" approximations

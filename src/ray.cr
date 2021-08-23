@@ -34,15 +34,4 @@ module CRT
       end
     end
   end
-
-  # TODO: not sure if this is a temporary struct from the book
-  # or not, but either remove it or put it in sphere.cr eventually.
-  struct Sphere
-    getter radius : Float64, position : CRT::Point
-    property transform : CRT::Matrix
-
-    def initialize(@radius : Float64, @position : CRT::Point)
-      @transform = Matrix.identity(4,4)
-    end
-  end
 end
