@@ -1,5 +1,4 @@
 require "../crt"
-require "../crt_samples/pixel_canvas"
 
 # Sample module that includes activities from The Ray Tracer Challenge that
 # aren't necessarily needed for the ray tracer itself.

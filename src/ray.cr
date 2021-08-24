@@ -18,9 +18,12 @@ module CRT
     end
 
     def intersections(s : CRT::Sphere)
-      sphere_to_ray = (origin - CRT::Point.new(0,0,0)).as CRT::Vector
-      a = path.dot(path)
-      b = 2 * path.dot(sphere_to_ray)
+      # Applies the transform to the ray instead of the sphere so that we can
+      # always treat the sphere as existing at the origin.
+      ray2 = transform(s.transform.inverse)
+      sphere_to_ray = (ray2.origin - CRT::Point.new(0,0,0)).as CRT::Vector
+      a = ray2.path.dot(ray2.path)
+      b = 2 * ray2.path.dot(sphere_to_ray)
       c = sphere_to_ray.dot(sphere_to_ray) - 1
       disc = b**2 - 4*a*c
 

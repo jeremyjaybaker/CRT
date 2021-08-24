@@ -19,6 +19,7 @@ describe CRT::Vector do
 
   it "has a normal vector" do
     v1.normal.should eq CRT::Vector.new(0.26726,0.53452,0.80178)
+    v1.normal.magnitude.should eq 1.0
   end
 
   it "can compute a dot product with another vector" do

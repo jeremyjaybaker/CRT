@@ -1,7 +1,7 @@
 require "./spec_helper"
 
 describe CRT::Ray do
-  s = CRT::Sphere.new(1, CRT::Point.new(0,0,0))
+  s = CRT::Sphere.new
 
   describe "determining intersection pointers of a sphere" do
     context "with an origin 'behind' sphere" do
@@ -10,6 +10,14 @@ describe CRT::Ray do
           ray = CRT::Ray.new(CRT::Point.new(0,0,-5), CRT::Vector.new(0,0,1))
           inters = [CRT::Intersection.new(4.0,s),CRT::Intersection.new(6.0,s)]
           ray.intersections(s).should eq inters
+        end
+
+        it "returns correct coords even with a scaled sphere" do
+          ray = CRT::Ray.new(CRT::Point.new(0,0,-5), CRT::Vector.new(0,0,1))
+          sc = CRT::Sphere.new
+          sc.transform = CRT::Matrices.scale(2,2,2)
+          inters = [CRT::Intersection.new(3.0,sc),CRT::Intersection.new(7.0,sc)]
+          ray.intersections(sc).should eq inters
         end
       end
 
