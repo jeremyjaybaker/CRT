@@ -118,9 +118,9 @@ describe CRT::Matrix do
   describe "the inverse" do
     context "with an invertable matrix" do
       mat = CRT::Matrix.new(4,4, 6,4,4,4,
-                            5,5,7,6,
-                            4,-9,3,-7,
-                            9,1,7,-6)
+                                 5,5,7,6,
+                                 4,-9,3,-7,
+                                 9,1,7,-6)
 
       it "can return the inverse" do
         expected = CRT::Matrix.new(4,4, 167/530_f64,  -48/265_f64,  2/53_f64,   -4/265_f64,

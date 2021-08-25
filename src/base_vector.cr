@@ -32,6 +32,22 @@ module CRT
     # elegant as I'd like it to be, but not sure what to do about that
     # for now. This is also bad design as the parent should not have
     # any concept of it's child classes.
+    #
+    # Example of the problem:
+    # ```
+    # p1 = CRT::Point.new(1,1,1)
+    # p2 = CRT::Point.new(2,2,2)
+    # foo = p1 - p2
+    # typeof(foo) #=> BaseVector+ because it's a union type
+    # foo.class   #=> CRT::Vector
+    #
+    # def do_thing(v : CRT::Vector)
+    #   puts v
+    # end
+    #
+    # do_thing(foo)                 #=> raises exception
+    # do_thing(foo.as(CRT::Vector)) #=> works as expected, but verbose
+    # ```
     def self.from(mat : Matrix)
       mat_w = mat[3][0]
       if mat_w == 0

@@ -1,4 +1,5 @@
 require "../crt"
+require "./canvas"
 
 # Sample module that includes activities from The Ray Tracer Challenge that
 # aren't necessarily needed for the ray tracer itself.
@@ -28,17 +29,18 @@ module CRTSamples
       def tick
         new_pos = @proj.pos + @proj.velocity
         new_vel = @proj.velocity + @env.gravity + @env.wind
-        @proj = Projectile.new(new_pos, new_vel)
+        @proj = Projectile.new(new_pos.as(CRT::Point), new_vel.as(CRT::Vector))
       end
     end
 
     def self.run
-      c = CRT::PixelCanvas.new(900,550)
+      c = CRTSamples::Canvas.new(900,550)
       p = Projectile.new(CRT::Point.new(0,1,0), CRT::Vector.new(1,1,0).normal)
-      e = Environment.new(CRT::Vector.new(0,-0.1,0), CRT::Vector.new(0,0,0))
+      e = Environment.new(CRT::Vector.new(0,-0.001,0), CRT::Vector.new(-0.0002,0,0))
       s = Scenario.new(p,e)
 
-      c[10][10] = CRT::Color.red
+      # Test point
+      c[20][10] = CRT::Color.red
 
       # Should eventually return false when drawing a point that is out
       # of bounds of the canvas.
