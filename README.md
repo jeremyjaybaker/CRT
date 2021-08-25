@@ -8,6 +8,12 @@ Generate docs using `crystal docs` and see docs/CRT.html.
 
 Some code from the book is "extra" and doesn't directly contribute to the ray tracer, but can be run as a demo/sample. These files exist in src/crt_samples/ and have bash scripts that can execute the given sample.
 
+Available samples:
+
+- projectile_sample: Renders path of a projectile with affects of wind and gravity to a PPM image.
+
+- clock_sample: Renders the 12 points of a clock to a PPM image.
+
 ## Installation
 
 1. Add the dependency to your `shard.yml`:
