@@ -4,7 +4,7 @@ require "./canvas"
 module CRTSamples
   class ClockSample
     def self.run
-      canvas = CRTSamples::Canvas.centered(40,40)
+      canvas = CRTSamples::Canvas.new((-20..20),(-20..20))
       p = CRT::Point.new(0,15,0)
 
       12.times do

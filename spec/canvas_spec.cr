@@ -7,9 +7,20 @@ describe CRTSamples::Canvas do
   end
 
   it "can create a origin-centered grid" do
-    pc = CRTSamples::Canvas.centered(50,50)
+    pc = CRTSamples::Canvas.new((-25..25),(-25..25))
     pc.x_start.should eq -25
     pc.y_start.should eq -25
+  end
+
+  it "can traverse coordinates instead of indices" do
+    pc = CRTSamples::Canvas.new((-1..1), (-1..1))
+    coord_map = [] of Array(Int32)
+    pc.coord_traverse{ |i,j| coord_map << [i,j] }
+    coord_map.should eq([
+      [-1,-1],[0,-1],[1,-1],
+      [-1,0], [0,0], [1,0],
+      [-1,1], [0,1], [1,1]
+    ])
   end
 
   describe "writing/reading colors by index" do
@@ -36,7 +47,7 @@ describe CRTSamples::Canvas do
 
   describe "writing/reading colors by coordinate" do
     it "can write pixels" do
-      pc = CRTSamples::Canvas.centered(20,20)
+      pc = CRTSamples::Canvas.new((-10..10),(-10..10))
       pc.draw(0,0,CRT::Color.red).should be_true
       pc[10][10].should eq CRT::Color.red
 
@@ -46,7 +57,7 @@ describe CRTSamples::Canvas do
       pc.draw(-10,-10,CRT::Color.red).should be_true
       pc[0][0].should eq CRT::Color.red
 
-      pc.draw(10,10,CRT::Color.red).should be_false
+      pc.draw(11,11,CRT::Color.red).should be_false
     end
   end
 
@@ -65,7 +76,7 @@ STR
     end
 
     it "wont write lines longer than 70 chars" do
-      pc = CRTSamples::Canvas.new(10,2,0,0,CRT::Color.new(1,0.8,0.6))
+      pc = CRTSamples::Canvas.new(10,2,CRT::Color.new(1,0.8,0.6))
       rand_line = pc.to_ppm.split("\n").sample
       rand_line.size.should be <= 70
     end

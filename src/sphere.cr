@@ -1,10 +1,13 @@
 module CRT
   struct Sphere
-    getter radius : Float64
-    property transform : CRT::Matrix
+    getter transform : CRT::Matrix
 
-    def initialize(@radius : Float64 = 1.0)
-      @transform = Matrix.identity(4,4)
+    def initialize(radius : Float64 = 0.0)
+      if radius > 0
+        @transform = CRT::Matrices.scale(radius,radius,radius)
+      else
+        @transform = Matrix.identity(4,4)
+      end
     end
   end
 end

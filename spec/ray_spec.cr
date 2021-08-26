@@ -14,8 +14,7 @@ describe CRT::Ray do
 
         it "returns correct coords even with a scaled sphere" do
           ray = CRT::Ray.new(CRT::Point.new(0,0,-5), CRT::Vector.new(0,0,1))
-          sc = CRT::Sphere.new
-          sc.transform = CRT::Matrices.scale(2,2,2)
+          sc = CRT::Sphere.new(2)
           inters = [CRT::Intersection.new(3.0,sc),CRT::Intersection.new(7.0,sc)]
           ray.intersections(sc).should eq inters
         end
