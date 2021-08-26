@@ -14,6 +14,8 @@ Available samples:
 
 - clock_sample: Renders the 12 points of a clock to a PPM image.
 
+- silhouette_sample: Renders the silhouette of a sphere against a black background.
+
 ## Installation
 
 1. Add the dependency to your `shard.yml`:
