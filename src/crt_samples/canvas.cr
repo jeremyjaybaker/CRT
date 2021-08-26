@@ -121,14 +121,7 @@ module CRTSamples
       @_pixels.to_a.flatten
     end
 
-    # String in the format of a PPM image type that can be written
-    # directly to a new file.
-    #
-    # `natural_origin = true` keeps 0,0 at the top-left of the image. While it
-    # makes sense to store arrays in this fashion, by default it usually feels
-    # more correct for 0,0 to be at the bottom-left of the image like a cartesian
-    # coordinate plane. For this reason, natural_original is set to false by
-    # default to allow the origin to exist at the bottom-left.
+    # String in the format of a PPM image type that can be written directly to a new file.
     def to_ppm(mcv : Int32 = 255)
       "P3\n#{@width} #{@height}\n#{mcv}\n#{ppm_grid_string(mcv)}\n"
     end
