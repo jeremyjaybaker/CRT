@@ -8,7 +8,7 @@ module CRTSamples
       p = CRT::Point.new(0,15,0)
 
       12.times do
-        canvas.draw(p.as CRT::Point, CRT::Color.white)
+        canvas.draw(p.as CRT::Point, CRT::Color.rand)
         p = p.rotate_z(CRT::PI/6)
       end
 

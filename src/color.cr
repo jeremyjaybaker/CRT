@@ -31,6 +31,10 @@ module CRT
       @_matrix[2][0]
     end
 
+    def self.rand
+      new [[Random.rand],[Random.rand],[Random.rand]]
+    end
+
     def self.black
       new [[0.0],[0.0],[0.0]]
     end

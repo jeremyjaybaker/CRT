@@ -39,12 +39,9 @@ module CRTSamples
       e = Environment.new(CRT::Vector.new(0,-0.001,0), CRT::Vector.new(-0.0002,0,0))
       s = Scenario.new(p,e)
 
-      # Test point
-      c[20][10] = CRT::Color.red
-
       # Should eventually return false when drawing a point that is out
       # of bounds of the canvas.
-      while c.draw(s.proj.pos, CRT::Color.white)
+      while c.draw(s.proj.pos, CRT::Color.rand)
         s.tick
       end
 
