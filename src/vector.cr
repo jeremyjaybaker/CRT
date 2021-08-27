@@ -12,6 +12,11 @@ module CRT
       @mag ||= Math.sqrt(x**2 + y**2 + z**2).as Float64
     end
 
+    # Reflect self across the axis defined by the given vector
+    def reflect(v : Vector)
+      self - v * 2 * dot(v)
+    end
+
     def normal
       self.class.new(x/magnitude, y/magnitude, z/magnitude)
     end

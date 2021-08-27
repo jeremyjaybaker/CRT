@@ -9,6 +9,14 @@ describe CRT::Vector do
     (-v1).should eq CRT::Vector.new(-1,-2,-3)
   end
 
+  it "can calculate a reflection vector" do
+    v_1 = CRT::Vector.new(1,-1,0)
+    v_2 = CRT::Vector.new(0,-1,0)
+    dim = Math.sqrt(2)/2
+    v_1.reflect(CRT::Vector.new(0,1,0)).should eq CRT::Vector.new(1,1,0)
+    v_2.reflect(CRT::Vector.new(dim,dim,0)).should eq CRT::Vector.new(1,0,0)
+  end
+
   it "has a #w of 0" do
     v1.w.should eq 0
   end
