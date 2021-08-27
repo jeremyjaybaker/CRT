@@ -49,12 +49,12 @@ module CRTSamples
     # c2 = Canvas.new(10,10)
     # c1 == c2 #=> true
     # ```
-    def initialize(range : Range(Int32,Int32), domain : Range(Int32,Int32),
+    def initialize(domain : Range(Int32,Int32), range : Range(Int32,Int32),
                    base : CRT::Color = CRT::Color.black)
-      @width = range.max - range.min + 1
-      @height = domain.max - domain.min + 1
-      @x_start = range.min
-      @y_start = domain.min
+      @width = domain.max - domain.min + 1
+      @height = range.max - range.min + 1
+      @x_start = domain.min
+      @y_start = range.min
       @_pixels = PixelGrid.new
       init_pixels(base)
     end
