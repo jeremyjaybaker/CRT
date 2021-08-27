@@ -5,6 +5,8 @@ module CRT
   # calculations more smooth. Vector also has a few more calculations in it
   # like #cross and #dot, but majority functionality is still shared.
   abstract struct BaseVector
+    include Transform
+
     class InvalidMatrix < Exception
       def initialize(mat : CRT::Matrix)
         super "Cannot initialize vector-based class with matrix #{mat}."
@@ -107,29 +109,8 @@ module CRT
       @_matrix == b.to_matrix
     end
 
-    def translate(x : Float64, y : Float64, z : Float64)
-      self.class.from(Matrices.translation(x,y,z) * self)
-    end
-
-    def scale(x : Float64, y : Float64, z : Float64)
-      self.class.from(Matrices.scale(x,y,z) * self)
-    end
-
-    def rotate_x(rad : Float64)
-      self.class.from(Matrices.rotation_x(rad) * self)
-    end
-
-    def rotate_y(rad : Float64)
-      self.class.from(Matrices.rotation_y(rad) * self)
-    end
-
-    def rotate_z(rad : Float64)
-      self.class.from(Matrices.rotation_z(rad) * self)
-    end
-
-    def shear(a : Float64,       b : Float64 = 0.0, c : Float64 = 0.0,
-              d : Float64 = 0.0, e : Float64 = 0.0, f : Float64 = 0.0)
-      self.class.from(Matrices.shear(a,b,c,d,e,f) * self)
+    private def transform(mat)
+      self.class.from(mat * self)
     end
   end
 end

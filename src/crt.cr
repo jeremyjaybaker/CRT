@@ -1,3 +1,4 @@
+require "./transform"
 require "./matrix"
 require "./matrix_errors"
 require "./matrices"

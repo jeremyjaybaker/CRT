@@ -168,7 +168,7 @@ module CRT
       end
     end
 
-    # Det implementation that allows recursion for smaller submatrices if
+    # Determinant implementation that allows recursion for smaller submatrices if
     # a size larger than 2x2 is used. This is a support method for the public
     # method #det.
     private def rec_det(mat : Matrix)
