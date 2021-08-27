@@ -35,5 +35,9 @@ module CRT
               d : Float64 = 0.0, e : Float64 = 0.0, f : Float64 = 0.0)
       transform(Matrices.shear(a,b,c,d,e,f))
     end
+
+    private def transform(mat)
+      self.class.new(@transform * mat)
+    end
   end
 end

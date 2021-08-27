@@ -9,6 +9,8 @@ require "./color"
 require "./ray"
 require "./intersection"
 require "./sphere"
+require "./point_light"
+require "./material"
 
 module CRT
   # Used for floating point comparison "good enough" approximations

@@ -1,9 +1,10 @@
 module CRT
   struct Sphere
     include Transform
-    getter transform : CRT::Matrix
+    getter transform : CRT::Matrix,
+      material : CRT::Material
 
-    def initialize(radius : Float64 = 0.0)
+    def initialize(radius : Float64 = 0.0, @material = CRT::Material.new)
       if radius > 0
         @transform = Matrices.scale(radius,radius,radius)
       else
@@ -11,7 +12,7 @@ module CRT
       end
     end
 
-    def initialize(@transform : CRT::Matrix)
+    def initialize(@transform : CRT::Matrix, @material = CRT::Material.new)
     end
 
     def normal(p : CRT::Point)
@@ -24,10 +25,6 @@ module CRT
 
     def normal(x : Float64, y : Float64, z : Float64)
       normal(CRT::Point.new(x,y,z))
-    end
-
-    private def transform(mat)
-      self.class.new(@transform * mat)
     end
   end
 end

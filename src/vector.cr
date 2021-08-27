@@ -13,15 +13,15 @@ module CRT
     end
 
     # Reflect self across the axis defined by the given vector
-    def reflect(v : Vector)
-      self - v * 2 * dot(v)
+    def reflect(v : Vector) : CRT::Vector
+      (self - v * 2 * dot(v)).as(CRT::Vector)
     end
 
-    def normal
+    def normal : Vector
       self.class.new(x/magnitude, y/magnitude, z/magnitude)
     end
 
-    def dot(v : Vector)
+    def dot(v : Vector) : Float64
       x*v.x + y*v.y + z*v.z
     end
 
