@@ -11,7 +11,7 @@ module CRT
     end
 
     def at(t : Float64)
-      path * t + origin
+      (path.normal * t) + origin
     end
 
     # Applies the transform matrix to the ray

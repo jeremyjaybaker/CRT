@@ -14,7 +14,8 @@ module CRT
     end
 
     # TODO: document steps
-    def lighting(l : CRT::PointLight, p : CRT::Point, eye : CRT::Vector, norm : CRT::Vector)
+    def lighting(l : CRT::PointLight, p : CRT::Point,
+                 eye : CRT::Vector, norm : CRT::Vector) : CRT::Color
       effective_color = @color * l.intensity
       lightv = (l.position - p).as(CRT::Vector).normal
       amb = effective_color * @ambient

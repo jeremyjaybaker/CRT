@@ -105,13 +105,12 @@ describe CRT::Ray do
     end
   end
 
-  describe "returning a point along path at t" do
+  describe "returning the point along path at t" do
     it "can return the point" do
       r1 = CRT::Ray.new(CRT::Point.new(0,0,0), CRT::Vector.new(0,1,0))
-      r2 = CRT::Ray.new(CRT::Point.new(1,1,1), CRT::Vector.new(-1,-1,-1))
-      t = 5.0
-      r1.at(t).should eq CRT::Point.new(0,5,0)
-      r2.at(t).should eq CRT::Point.new(-4,-4,-4)
+      r1.at(0.0).should eq CRT::Point.new(0,0,0)
+      r1.at(0.5).should eq CRT::Point.new(0,0.5,0)
+      r1.at(5.0).should eq CRT::Point.new(0,5,0)
     end
   end
 end
