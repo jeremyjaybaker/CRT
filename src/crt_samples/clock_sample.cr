@@ -2,6 +2,7 @@ require "../crt"
 require "./canvas"
 
 module CRTSamples
+  # Renders 12 points on a canvas that looks like a clock face
   class ClockSample
     def self.run
       canvas = CRTSamples::Canvas.new((-20..20),(-20..20))

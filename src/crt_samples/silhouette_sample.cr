@@ -2,6 +2,7 @@ require "../crt"
 require "./canvas"
 
 module CRTSamples
+  # Renders the silhouetee of a sphere. Basically just looks like a circle.
   class SilhouetteSample
     def self.run
       # How far back the wall is. Note: isn't it weird that this changes sphere size? If

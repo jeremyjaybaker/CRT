@@ -104,4 +104,14 @@ describe CRT::Ray do
       r.transform(mat).should eq expected
     end
   end
+
+  describe "returning a point along path at t" do
+    it "can return the point" do
+      r1 = CRT::Ray.new(CRT::Point.new(0,0,0), CRT::Vector.new(0,1,0))
+      r2 = CRT::Ray.new(CRT::Point.new(1,1,1), CRT::Vector.new(-1,-1,-1))
+      t = 5.0
+      r1.at(t).should eq CRT::Point.new(0,5,0)
+      r2.at(t).should eq CRT::Point.new(-4,-4,-4)
+    end
+  end
 end

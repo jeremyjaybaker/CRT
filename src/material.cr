@@ -4,9 +4,9 @@ module CRT
       specular : Float64, shininess : Float64,
       color : CRT::Color
 
-    def initialize(ambient : Float64 = 0.1,   diffuse : Float64 = 0.9,
-                   specular : Float64 = 0.9,  shininess : Float64 = 200.0,
-                   @color : CRT::Color = CRT::Color.white)
+    def initialize(@color : CRT::Color = CRT::Color.white,
+                   ambient : Float64 = 0.1,   diffuse : Float64 = 0.9,
+                   specular : Float64 = 0.9,  shininess : Float64 = 200.0)
       @ambient = ambient.clamp(0.0,1.0)
       @diffuse = diffuse.clamp(0.0,1.0)
       @specular = specular.clamp(0.0,1.0)

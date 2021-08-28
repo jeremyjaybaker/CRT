@@ -10,6 +10,10 @@ module CRT
       positives.any? ? positives.min_by{ |i| i.t } : nil
     end
 
+    def at(t : Float64)
+      path * t + origin
+    end
+
     # Applies the transform matrix to the ray
     def transform(mat : Matrix)
       Ray.new(
@@ -17,6 +21,7 @@ module CRT
         CRT::Vector.new(mat * path))
     end
 
+    # TODO: document steps
     def intersections(s : CRT::Sphere)
       # Applies the transform to the ray instead of the sphere so that we can
       # always treat the sphere as existing at the origin.

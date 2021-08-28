@@ -4,6 +4,7 @@ require "./canvas"
 # Sample module that includes activities from The Ray Tracer Challenge that
 # aren't necessarily needed for the ray tracer itself.
 module CRTSamples
+  # Renders the path of a projectile being acted upon by wind and gravity.
   # You can execute the sample by running the following in bash:
   # `crystal eval 'require "./src/crt_samples/projectile_sample"; CRTSamples::ProjectileSample.run'`
   class ProjectileSample
