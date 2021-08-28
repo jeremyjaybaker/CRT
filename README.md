@@ -16,6 +16,8 @@ Available samples:
 
 - silhouette_sample: Renders the silhouette of a sphere against a black background.
 
+- lit_sphere_sample: Renders a red sphere with realistic shading.
+
 ## Installation
 
 1. Add the dependency to your `shard.yml`:

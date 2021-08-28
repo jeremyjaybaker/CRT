@@ -6,6 +6,12 @@ describe CRT::Sphere do
     s.transform.should eq CRT::Matrices.scale(5,5,5)
   end
 
+  it "persists its material after a transform" do
+    mat = CRT::Material.new(CRT::Color.red)
+    s = CRT::Sphere.new(1, mat)
+    s.shear(2,2).material.should eq s.material
+  end
+
   describe "determining a normal vector" do
     it "returns the normal without transforms" do
       s = CRT::Sphere.new

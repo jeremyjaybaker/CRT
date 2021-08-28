@@ -16,7 +16,7 @@ module CRTSamples
       s = CRT::Sphere.new(
         radius,
         CRT::Material.new(CRT::Color.red)
-      )
+      )#.shear(0,0,1.2) # example shear, uncomment to use
 
       light = CRT::PointLight.new(
         CRT::Color.white,

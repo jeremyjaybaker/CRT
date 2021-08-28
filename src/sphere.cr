@@ -4,12 +4,8 @@ module CRT
     getter transform : CRT::Matrix,
       material : CRT::Material
 
-    def initialize(radius : Float64 = 0.0, @material = CRT::Material.new)
-      if radius > 0
-        @transform = Matrices.scale(radius,radius,radius)
-      else
-        @transform = Matrix.identity(4,4)
-      end
+    def initialize(radius : Float64 = 1.0, @material = CRT::Material.new)
+      @transform = Matrices.scale(radius,radius,radius)
     end
 
     def initialize(@transform : CRT::Matrix, @material = CRT::Material.new)
@@ -25,6 +21,10 @@ module CRT
 
     def normal(x : Float64, y : Float64, z : Float64)
       normal(CRT::Point.new(x,y,z))
+    end
+
+    private def transform(mat)
+      self.class.new(@transform * mat, @material)
     end
   end
 end
