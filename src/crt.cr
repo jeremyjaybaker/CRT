@@ -1,4 +1,5 @@
 require "./transform"
+require "./phong_data"
 require "./matrix"
 require "./matrix_errors"
 require "./matrices"
@@ -11,6 +12,9 @@ require "./intersection"
 require "./sphere"
 require "./point_light"
 require "./material"
+require "./world"
+require "./pixel_grid"
+require "./camera"
 
 module CRT
   # Used for floating point comparison "good enough" approximations

@@ -31,14 +31,12 @@ module CRTSamples
     getter width : Int32, height : Int32,
       x_start : Int32, y_start : Int32
 
-    alias PixelGrid = Array(Array(CRT::Color))
-
     # Initialize the canvas with a required width and height. This creates an image where
     # 0,0 is anchored at the bottom-left corner.
     def initialize(@width : Int32, @height : Int32,
                     base : CRT::Color = CRT::Color.black)
       @x_start = @y_start = 0
-      @_pixels = PixelGrid.new
+      @_pixels = Array(Array(CRT::Color)).new
       init_pixels(base)
     end
 
@@ -55,7 +53,7 @@ module CRTSamples
       @height = range.max - range.min + 1
       @x_start = domain.min
       @y_start = range.min
-      @_pixels = PixelGrid.new
+      @_pixels = Array(Array(CRT::Color)).new
       init_pixels(base)
     end
 

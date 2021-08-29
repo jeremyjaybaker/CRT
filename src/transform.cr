@@ -36,6 +36,9 @@ module CRT
       transform(Matrices.shear(a,b,c,d,e,f))
     end
 
+    # Default generic transform method. Can be overridden in included
+    # if different functionality is needed. For example, you might want
+    # @transform to be mutated instead of returning a new object.
     private def transform(mat)
       self.class.new(@transform * mat)
     end

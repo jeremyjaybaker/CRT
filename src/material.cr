@@ -13,32 +13,47 @@ module CRT
       @shininess = shininess.clamp(10.0,200.0)
     end
 
-    # TODO: document steps
-    def lighting(l : CRT::PointLight, p : CRT::Point,
-                 eye : CRT::Vector, norm : CRT::Vector) : CRT::Color
-      effective_color = @color * l.intensity
-      lightv = (l.position - p).as(CRT::Vector).normal
-      amb = effective_color * @ambient
-      light_dot_norm = lightv.dot(norm)
+    def lighting(light : CRT::PointLight, point : CRT::Point,
+                 eye : CRT::Vector, normal : CRT::Vector)
+      lighting(PhongData.new(light,point,eye,normal))
+    end
+
+    def lighting(data : PhongData) : Color
+      # Calculations that are shared amonst the multiple components
+      effective_color = @color * data.light.intensity
+      lightv = (data.light.position - data.point).as(Vector).normal
+
+      # TODO: splitting these up is readable, but might incur too much
+      # overhead by adding extra function calls?
+      ambient(effective_color) +
+        diffuse(data, effective_color, lightv) +
+        specular(data, lightv)
+    end
+
+    def ambient(effective_color : Color) : Color
+      effective_color * @ambient
+    end
+
+    def diffuse(data : PhongData, effective_color : Color, lightv : Vector) : Color
+      light_dot_norm = lightv.dot(data.normal)
 
       if light_dot_norm < 0
-        diff = CRT::Color.black
-        spec = CRT::Color.black
+        Color.black
       else
-        diff = effective_color * @diffuse * light_dot_norm
+        effective_color * @diffuse * light_dot_norm
       end
+    end
 
-      reflectv = -lightv.reflect(norm)
-      reflect_dot_eye = reflectv.dot(eye)
+    def specular(data : PhongData, lightv : Vector) : Color
+      reflectv = -lightv.reflect(data.normal)
+      reflect_dot_eye = reflectv.dot(data.eye)
 
       if reflect_dot_eye <= 0
-        spec = CRT::Color.black
+        Color.black
       else
         factor = reflect_dot_eye ** @shininess
-        spec = l.intensity * @specular * factor
+        data.light.intensity * @specular * factor
       end
-
-      amb + diff + spec
     end
   end
 end

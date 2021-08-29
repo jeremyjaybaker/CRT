@@ -32,14 +32,12 @@ module CRT
       c = sphere_to_ray.dot(sphere_to_ray) - 1
       disc = b**2 - 4*a*c
 
-      if disc < 0
-        [] of Intersection
-      else
-        [
-          Intersection.new((-b-Math.sqrt(disc))/(2*a), s),
-          Intersection.new((-b+Math.sqrt(disc))/(2*a), s)
-        ]
-      end
+      return [] of Intersection if disc < 0
+
+      [
+        Intersection.new((-b-Math.sqrt(disc))/(2*a), s),
+        Intersection.new((-b+Math.sqrt(disc))/(2*a), s)
+      ]
     end
   end
 end

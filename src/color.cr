@@ -91,6 +91,12 @@ module CRT
       ])
     end
 
+    # Enables various Enumerable comparisons on Color, like
+    # using Array(Color)#sum
+    def self.zero
+      black
+    end
+
     private def validate!
       raise InvalidMatrix.new(@_matrix) unless @_matrix.size == [3,1]
     end
