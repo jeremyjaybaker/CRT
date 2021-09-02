@@ -15,6 +15,8 @@ require "./material"
 require "./world"
 require "./pixel_grid"
 require "./camera"
+# Below: sample or part of lib?
+require "./ppm"
 
 module CRT
   # Used for floating point comparison "good enough" approximations

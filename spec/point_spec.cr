@@ -9,6 +9,11 @@ describe CRT::Point do
     (-p1).should eq CRT::Point.new(3,-4,-5)
   end
 
+  it "can coerce an invalid matrix into a point" do
+    bad_mat = CRT::Matrix.new(4,1, 1,2,3,99)
+    CRT::Point.coerce(bad_mat).should be_a CRT::Point
+  end
+
   it "has a #w of 1" do
     p1.w.should eq 1
   end

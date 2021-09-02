@@ -17,5 +17,17 @@ module CRT
         end
       end
     end
+
+    def [](row)
+      @pixels[row]
+    end
+
+    def traverse(&)
+      @height.times do |y|
+        @width.times do |x|
+          yield x,y
+        end
+      end
+    end
   end
 end

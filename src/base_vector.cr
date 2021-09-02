@@ -61,6 +61,18 @@ module CRT
       end
     end
 
+    # Create a new BaseVector and, instead of expecting/
+    # validating the correct value of w, force the matrix
+    # to use the correct w value.
+    #
+    # This comes in handy with inverted/transposed matrices,
+    # for example, where the w value naturally can go invalid
+    # but the rest of the calculations are perfectly valid.
+    def self.coerce(mat : Matrix)
+      mat[3][0] = w.to_f
+      new(mat)
+    end
+
     def x
       @_matrix[0][0]
     end
@@ -74,6 +86,10 @@ module CRT
     end
 
     def w
+      self.class.w
+    end
+
+    def self.w
       raise "Must be defined in child"
     end
 

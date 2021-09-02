@@ -18,6 +18,8 @@ Available samples:
 
 - lit_sphere_sample: Renders a red sphere with realistic shading.
 
+- simple_scene_sample: Renders several spheres against a background made of spheres.
+
 ## Installation
 
 1. Add the dependency to your `shard.yml`:

@@ -1,6 +1,6 @@
 module CRT
   struct Vector < BaseVector
-    def w
+    def self.w
       0
     end
 

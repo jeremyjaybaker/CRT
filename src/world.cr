@@ -3,6 +3,7 @@ module CRT
     property objects : Array(Sphere),
       lights : Array(PointLight)
 
+    # TODO: repurpose PhongData to act as Comp
     alias Comp = NamedTuple(t: Float64, object: CRT::Sphere, point: CRT::Point,
                             eye_v: CRT::Vector, normal_v: CRT::Vector, is_inside: Bool)
 

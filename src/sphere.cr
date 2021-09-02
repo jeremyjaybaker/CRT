@@ -16,7 +16,8 @@ module CRT
       # obj_space = transform^-1 * world_space
       obj_p = CRT::Point.new(@transform.inverse * p)
       obj_norm = obj_p - CRT::Point.new(0,0,0)
-      CRT::Vector.new(@transform.inverse.transpose * obj_norm).normal
+      world_norm = @transform.inverse.transpose * obj_norm
+      CRT::Vector.coerce(world_norm).normal
     end
 
     def normal(x : Float64, y : Float64, z : Float64)

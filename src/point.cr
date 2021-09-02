@@ -1,6 +1,6 @@
 module CRT
   struct Point < BaseVector
-    def w
+    def self.w
       1
     end
 

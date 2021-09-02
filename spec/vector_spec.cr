@@ -9,6 +9,11 @@ describe CRT::Vector do
     (-v1).should eq CRT::Vector.new(-1,-2,-3)
   end
 
+  it "can coerce an invalid matrix into a vector" do
+    bad_mat = CRT::Matrix.new(4,1, 1,2,3,99)
+    CRT::Vector.coerce(bad_mat).should be_a CRT::Vector
+  end
+
   it "can calculate a reflection vector" do
     v_1 = CRT::Vector.new(1,-1,0)
     v_2 = CRT::Vector.new(0,-1,0)
